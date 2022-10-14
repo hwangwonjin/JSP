@@ -1,3 +1,8 @@
+<%@page import="bean.StudentBean"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="config.DB"%>
+<%@page import="java.sql.Connection"%>
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%
 	//데이터 수신
@@ -6,9 +11,23 @@
 	
 	//데이터 작성
 	
-	
+		StudentBean sb = null;
 		try{
+			Connection conn = DB.getInstance().getConnection();
+			String sql = "SELECT * FROM `student` WHERE `stdNo`=?";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, stdNo);
 			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				sb = new StudentBean();
+				sb.setStdNo(rs.getString(1));
+				sb.setStdName(rs.getString(2));
+				sb.setStdHp(rs.getString(3));
+				sb.setStdYear(rs.getString(4));
+				sb.setStdAddress(rs.getString(5));
+			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -34,20 +53,20 @@
 			<table border="1">
 				<tr>
 					<td>학번</td>
-					<td><input type="text" name="stdNo" maxlength="8" required></td>
+					<td><input type="text" name="stdNo" maxlength="8" required value="<%= sb.getStdNo()%>"></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="stdName"></td>
+					<td><input type="text" name="stdName" value="<%= sb.getStdName()%>"></td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="stdHp"></td>
+					<td><input type="text" name="stdHp" value="<%= sb.getStdHp()%>"></td>
 				</tr>
 				<tr>
 					<td>학년</td>
 					<td>
-					<select name="stdYear">
+					<select name="stdYear" >
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -58,7 +77,7 @@
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="stdAddress" placeholder="주소 입력"></td>
+					<td><input type="text" name="stdAddress" value="<%= sb.getStdAddress()%>"></td>
 				</tr>
 				<tr>
 				<td colspan="2" align="right">
