@@ -12,7 +12,7 @@
 	String user = "root";
 	String pass = "1234";
 
-	List<MemberBean> members= null;
+	List<MemberBean> members= new ArrayList<>();
 	try{
 		//1단계
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,15 +26,9 @@
 		//4단계
 		ResultSet rs = stmt.executeQuery("SELECT * FORM `member`");
 		
-		members = new ArrayList<>();
+		
 		while(rs.next()){
-			String uid = rs.getString(1);
-			String name = rs.getString(2);
-			String hp = rs.getString(3);
-			String pos = rs.getString(4);
-			String dep = rs.getString(5);
-			String rdate = rs.getString(6);
-			
+		
 			MemberBean mb = new MemberBean();
 			mb.setUid(rs.getString(1));
 			mb.setName(rs.getString(2));
@@ -47,9 +41,9 @@
 			
 		}
 		
-		rs.close();
+		
 		conn.close();
-		stmt.close();
+		
 		
 	}catch(Exception e){
 		e.printStackTrace();
@@ -88,34 +82,34 @@
 				<td><%= mb.getPos() %></td>
 				<td>
 					<%
-						switch(mb.getDep()){
-						case 101:
-							out.println("영업1부");
-							break;
-						case 102:
-							out.println("영업2부");
-							break;
-						case 103:
-							out.println("영업3부");
-							break;
-						case 104:
-							out.println("영업4부");
-							break;
-						case 105:
-							out.println("인사부");
-							break;
-						}
+							switch(mb.getDep()){
+							case 101:
+								out.println("영업1부");
+								break;
+							case 102:
+								out.println("영업2부");
+								break;
+							case 103:
+								out.println("영업3부");
+								break;
+							case 104:
+								out.println("영업4부");
+								break;
+							case 105:
+								out.println("인사부");
+								break;
+							}
 				
-					%>
+						%>
 		
-				</td>
-				<td><%= mb.getRdate().substring(2,10) %></td>
-				<td>
-					<a href="./modify.jsp?uid=<%=mb.getUid()%>">수정</a>
-					<a href="./delete.jsp?uid=<%=mb.getUid()%>">삭제</a>
-				</td>
+					</td>
+					<td><%= mb.getRdate().substring(2,10) %></td>
+					<td>
+						<a href="./modify.jsp?uid=<%=mb.getUid()%>">수정</a>
+						<a href="./delete.jsp?uid=<%=mb.getUid()%>">삭제</a>
+					</td>
 				
-			</tr>
+				</tr>
 			<% } %>
 		</table>
 	</body>

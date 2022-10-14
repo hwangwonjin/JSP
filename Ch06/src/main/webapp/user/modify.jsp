@@ -16,6 +16,7 @@
 	String pass = "1234";
 	
 	UserBean ub = null;
+	
 	try{
 		Connection conn = DriverManager.getConnection(host, user, pass);
 		
@@ -33,6 +34,9 @@
 			ub.setAge(rs.getInt(4));
 		}
 		
+		rs.close();
+		psmt.close();
+		conn.close();
 		
 	}catch(Exception e){
 		e.printStackTrace();
@@ -58,19 +62,19 @@
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="uid" readonly value="<%= ub.getUid()%>"></td>
+					<td><input type="text" name="uid" readonly value="<%= ub.getUid()%>"/></td>
 					</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" value="<%= ub.getName()%>"></td>
+					<td><input type="text" name="name" value="<%= ub.getName()%>"/></td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="hp" value="<%= ub.getHp()%>"></td>
+					<td><input type="text" name="hp" value="<%= ub.getHp()%>"/></td>
 				</tr>
 				<tr>
 					<td>나이</td>
-					<td><input type="number" name="age" value="<%= ub.getAge()%>"></td>
+					<td><input type="number" name="age" value="<%= ub.getAge()%>"/></td>
 				</tr>
 				<tr>
 				<td colspan="2" align="right">
