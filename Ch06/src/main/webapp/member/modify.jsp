@@ -19,7 +19,7 @@
 	try{
 		Connection conn = DriverManager.getConnection(host, user, pass);
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELETE * FORM `member` WHERE `uid`='"+uid+"'");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `member` WHERE `uid`='"+uid+"'");
 		
 		if(rs.next()){
 			mb = new MemberBean();

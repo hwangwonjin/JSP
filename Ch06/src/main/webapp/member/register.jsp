@@ -15,15 +15,15 @@
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="uid" placeholder="아이디 입력"></td>
+					<td><input type="text" name="uid"/></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" placeholder="이름 입력"></td>
+					<td><input type="text" name="name"/></td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="hp" placeholder="휴대폰 입력"></td>
+					<td><input type="text" name="hp"/></td>
 				</tr>
 				<tr>
 					<td>직급</td>
@@ -52,7 +52,7 @@
 				
 				<tr>
 				<td colspan="2" align="right">
-					<input type="submit" value="등록하기">
+					<input type="submit" value="등록"/>
 				</td>
 				
 				</tr>

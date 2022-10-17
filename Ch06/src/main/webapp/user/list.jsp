@@ -32,10 +32,10 @@
 	users = new ArrayList<>();
 	
 	while(rs.next()){
-		String uid = rs.getString(1);
-		String name = rs.getString(2);
-		String hp = rs.getString(3);
-		int age = rs.getInt(4);
+		//String uid = rs.getString(1);
+		//String name = rs.getString(2);
+		//String hp = rs.getString(3);
+		//int age = rs.getInt(4);
 		
 		UserBean ub = new UserBean();
 		ub.setUid(rs.getString(1));

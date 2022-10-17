@@ -8,15 +8,15 @@
 		//데이터 수신
 		request.setCharacterEncoding("UTF-8");
 		String stdNo = request.getParameter("stdNo");
-		String stdName = request.getParameter("stdNo");
-		String stdHp = request.getParameter("stdNo");
-		String stdYear = request.getParameter("stdNo");
-		String stdAddress = request.getParameter("stdNo");
+		String stdName = request.getParameter("stdName");
+		String stdHp = request.getParameter("stdHp");
+		String stdYear = request.getParameter("stdYear");
+		String stdAddress = request.getParameter("stdAddress");
 		
 		//데이터 작업
 		try{
 			Connection conn = DB.getInstance().getConnection();
-			String sql = "DELETE  FORM `student` WHERE `stdNo` = ?";
+			String sql = "DELETE  FROM `student` WHERE `stdNo` = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, stdNo);
 			psmt.executeUpdate();

@@ -11,7 +11,7 @@
 	String hp = request.getParameter("hp");
 	String pos = request.getParameter("pos");
 	String dep = request.getParameter("dep");
-	String rdate = request.getParameter("rdate");
+
 	
 	//데이터 작업
 	String host = "jdbc:mysql://127.0.0.1:3306/java2db";
@@ -31,7 +31,7 @@
 	psmt.setString(3, hp);
 	psmt.setString(4, pos);
 	psmt.setString(5, dep);
-	psmt.setString(6, rdate);
+	
 	
 	psmt.executeUpdate();
 	

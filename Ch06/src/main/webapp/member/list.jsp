@@ -24,7 +24,7 @@
 		Statement stmt = conn.createStatement();
 		
 		//4단계
-		ResultSet rs = stmt.executeQuery("SELECT * FORM `member`");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `member`");
 		
 		
 		while(rs.next()){

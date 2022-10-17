@@ -16,7 +16,13 @@
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(host, user, pass);
 		Statement stmt = conn.createStatement();
-		stmt.executeUpdate("DLELTE FROM `member` WHERE `uid` = '"+uid+"'");
+		stmt.executeUpdate("DELETE FROM `member` WHERE `uid`='"+uid+"'");
+		//String sql = "DELETE FROM `member` WHERE `uid`=?";
+		//PreparedStatement psmt = conn.prepareStatement(sql);
+		//psmt.setString(1, uid);
+		//psmt.executeUpdate();
+		
+		//psmt.close();
 		conn.close();
 		
 	}catch(Exception e){
@@ -25,5 +31,6 @@
 	
 	//리스트 이동
 	response.sendRedirect("./list.jsp");
+
 
 %>

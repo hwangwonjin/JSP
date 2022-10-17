@@ -29,6 +29,8 @@
 				sb.setStdAddress(rs.getString(5));
 			}
 			
+			conn.close();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

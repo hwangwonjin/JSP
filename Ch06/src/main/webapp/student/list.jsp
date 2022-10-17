@@ -69,8 +69,8 @@
 				<td><%= sb.getStdYear() %></td>
 				<td><%= sb.getStdAddress() %></td>
 				<td>
-					<a href="./modify.jsp?uid=<%= sb.getStdNo() %>">수정</a>
-					<a href="./delete.jsp?uid=<%= sb.getStdNo()%>">삭제</a>
+					<a href="./modify.jsp?stdNo=<%= sb.getStdNo() %>">수정</a>
+					<a href="./delete.jsp?stdNo=<%= sb.getStdNo()%>">삭제</a>
 				</td>
 				
 			</tr>
