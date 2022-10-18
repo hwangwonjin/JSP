@@ -16,7 +16,7 @@
 	
 	try{
 		Connection conn = DBCP.getConnection();
-		String sql = "SELETE * FROM `customer` WHERE `custId`=?";
+		String sql = "SELECT * FROM `customer` WHERE `custId`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, custId);
 		
@@ -51,23 +51,23 @@
 		<a href="../index.jsp">처음으로</a>
 		<a href="./list.jsp">고객목록</a>
 		
-		
+		<form action="./modifyProc.jsp" method="post">
 		 <table border="1">
 		 <tr>
 		 	<td>고객번호</td>
-		 	<td><input type="text" name="custId" value="<%= cs.getCustId()%>"> </td>
+		 	<td><input type="text" name="custId" value="<%= cs.getCustId()%>"/> </td>
 		 </tr>
 		 <tr>
 		 	<td>고객명</td>
-		 	<td><input type="text" name="name" value="<%= cs.getName()%>"> </td>
+		 	<td><input type="text" name="name" value="<%= cs.getName()%>"/> </td>
 		 </tr>
 		 <tr>
 		 	<td>주소</td>
-		 	<td><input type="text" name="address" value=" <%= cs.getAddress()%>"> </td>
+		 	<td><input type="text" name="address" value="<%=cs.getAddress()%>"/> </td>
 		 </tr>
 		 <tr>
 		 	<td>휴대폰</td>
-		 	<td><input type="text" name="phone" value=" <%= cs.getPhone()%>"> </td>
+		 	<td><input type="text" name="phone" value="<%=cs.getPhone()%>"/> </td>
 		 </tr>
 		 <tr>
 		 	<td colspan="2" align="right">
@@ -75,6 +75,6 @@
 		 	</td>
 		 </tr>
 		 </table>	
-	
+		</form>
 	</body>
 </html>

@@ -61,7 +61,7 @@
 			<td><%= cs.getPhone() %></td>
 			<td>
 				<a href="./modify.jsp?custId=<%= cs.getCustId()%>">수정</a>
-				<a href="./delect.jsp?custId=<%= cs.getCustId()%>">삭제</a>
+				<a href="./delete.jsp?custId=<%= cs.getCustId()%>">삭제</a>
 			
 			</td>
 		

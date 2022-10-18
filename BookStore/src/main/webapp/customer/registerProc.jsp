@@ -7,7 +7,7 @@
 <%
 	//데이터 수신
 	request.setCharacterEncoding("UTF-8");
-	
+	String custId = request.getParameter("custId");
 	String name = request.getParameter("name");
 	String address = request.getParameter("address");
 	String phone = request.getParameter("phone");
@@ -21,11 +21,12 @@
 		DataSource ds = (DataSource) Ctx.lookup("dbcp_java2_bookstore");//커넥션 풀 열기
 		Connection conn = ds.getConnection();
 		
-		String sql = "INSERT INTO `customer`(`name`,`address`,`phone`) VALUES(?,?,?)";
+		String sql = "INSERT INTO `customer` VALUES(?,?,?,?)";
 		PreparedStatement psmt = conn.prepareStatement(sql);
-		psmt.setString(1, name);
-		psmt.setString(2, address);
-		psmt.setString(3, phone);
+		psmt.setString(1, custId);
+		psmt.setString(2, name);
+		psmt.setString(3, address);
+		psmt.setString(4, phone);
 		
 		psmt.executeUpdate();
 		
