@@ -60,8 +60,8 @@
 			<td><%= cs.getAddress() %></td>
 			<td><%= cs.getPhone() %></td>
 			<td>
-				<a href="./modify.jsp">수정</a>
-				<a href="./delect.jsp">삭제</a>
+				<a href="./modify.jsp?custId=<%= cs.getCustId()%>">수정</a>
+				<a href="./delect.jsp?custId=<%= cs.getCustId()%>">삭제</a>
 			
 			</td>
 		
