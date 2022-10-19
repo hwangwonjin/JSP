@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ include file="./_header.jsp" %>
             <h3>Board System v1.0</h3>
-        </header>
+        
         <main id="user">
             <section class="login">
-                <form action="Jboard1/user/list.html">
+                <form action="Jboard1/user/list.jsp">
                     <table border="0">
                         <tr>
                             <td><img src="../img/login_ico_id.png" alt="아이디"/></td>
