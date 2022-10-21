@@ -44,10 +44,10 @@
 		 					users.each(function(){
 		 						
 		 						let tags = "<tr>";
-									tags +="<td>"+$(this).find('uid')+"</td>";
-									tags +="<td>"+user.name+"</td>";
-									tags +="<td>"+user.hp+"</td>";
-									tags +="<td>"+user.age+"</td>";
+									tags +="<td>"+$(this).find('uid').text()+"</td>";
+									tags +="<td>"+$(this).find('name').text()+"</td>";
+									tags +="<td>"+$(this).find('hp').text()+"</td>";
+									tags +="<td>"+$(this).find('age').text()+"</td>";
 									tags +="</tr>";
 								
 								$('table').append(tags);
