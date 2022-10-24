@@ -3,7 +3,8 @@
         <main id="board">
             <section class="write">
 
-                <form action="#">
+                <form action="/Jboard1/proc/writeProc.jsp" method="post">
+                <input type="hidden" name="uid" value="<%= ub.getUid()%>"/>
                     <table border="0">
                         <caption>글쓰기</caption>
                         <tr>
