@@ -15,7 +15,7 @@ public class DBCP {
 		
 		if(ds == null) {
 			
-			ds = (DataSource) new InitialContext().lookup("java:comp/env/dbcp_java2db");
+			ds = (DataSource) new InitialContext().lookup("java:comp/env/dbcp_userdb");
 		}
 		
 		
