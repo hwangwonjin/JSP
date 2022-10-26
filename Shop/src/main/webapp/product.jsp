@@ -89,6 +89,21 @@
 							"orderId":orderId
 					};
 					console.log(jsonData);
+					
+					$.ajax({
+						url:'./proc/registerProc.jsp',
+						method:'post',
+						data:jsonData,
+						dataType:'json',
+						success: function(data){
+							
+							if(data.result == 1){
+								alert('주문완료');
+							}else{
+								alert('주문실패');
+							}
+						}
+					});
 				});
 			});	
 		</script>
@@ -118,7 +133,7 @@
 			<td><%= pb.getPrice() %></td>
 			<td><%= pb.getCompany() %></td>
 			<td>
-				<button id="btnOrder">주문</button>
+				<button value="<%= pb.getProdno() %>" id="btnOrder">주문</button>
 			</td>
 		</tr>
 		<%} %>
