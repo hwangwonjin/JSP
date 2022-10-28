@@ -35,6 +35,8 @@ public class Sql {
 											+"`newName`=?,"
 											+"`oriName`=?";
 	
+	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
+	
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";
 	
 	public static final String SELECT_ARTICLES = "SELECT a. *, b.nick FROM `board_article` AS a "
@@ -42,5 +44,16 @@ public class Sql {
 												+"ON a.uid = b.uid "
 												+"ORDER BY `no` DESC "
 												+"LIMIT ?, 10";
+	
+	public static final String SELECT_ARTICLE = "SELECT a. *, b.fno, b.parent AS pno, b.newName, b.oriName, b.download "
+												+ "FROM `board_article` AS a "
+												+ "LEFT JOIN `board_file` AS b "
+												+ "ON a.`no` = b. `parent` "
+												+ "WHERE `no`=?";
+	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
+	
+	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
+	
+	public static final String UPDATE_FILE_DOWNLOAD = "update `board_file` set `download` = `download` + 1 where `fno`=?";
 	
 }
