@@ -73,9 +73,9 @@
                 <section class="commentForm">
                     <h3>댓글쓰기</h3>
                     <form action="#">
-                        <textarea name="content">댓글내용 입력</textarea>
+                        <textarea id="comment" name="content" placeholder="내용을 입력해주세요"></textarea>
                         <div>
-                            <a href="#" class="btn btnCancel">취소</a>
+                            <a href="#" class="btn btnCancel" id="cancle">취소</a>
                             <input type="submit" value="작성완료" class="btn btnComplete"/>
                         </div>
                     </form>
