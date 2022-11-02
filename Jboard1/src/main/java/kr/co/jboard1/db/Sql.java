@@ -69,6 +69,8 @@ public class Sql {
 														+ "JOIN `board_user` AS b USING(`uid`) "
 														+ "WHERE `parent`!=0 ORDER BY `no` DESC LIMIT 1";
 	
+	public static final String UPDATE_ARTICLE = "update `board_article` set `title`=?, `content`=?, `rdate`=NOW() where `no`=?";
+	
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	
@@ -81,4 +83,7 @@ public class Sql {
 	
 	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=?";
 	
+	public static final String DELETE_ARTICLE = "delete from `board_article` where `no`=? or `parent`=?";
+	
+	public static final String DELETE_FILE = "delete from `board_file` where `parent`=?";
 }

@@ -13,6 +13,7 @@
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
 	
+	
 	ArticleDAO dao = ArticleDAO.getinstance();
 	
 	//조회수 +1
@@ -29,6 +30,19 @@
 	<script>
 	
 			$(document).ready(function() {
+				
+				//글삭제
+				$('.btnRemove').click(function(){
+					let isDelete = confirm('정말 삭제하시겠습니까?');
+					if(isDelete){
+						return true;
+					}else{
+						return false;
+					}
+					
+				});
+				
+				
 				
 				//댓글 삭제
 				$(document).on('click', '.remove', function(e){
@@ -195,8 +209,10 @@
                 </table>
                 
                 <div>
-                    <a href="#" class="btn btnRemove">삭제</a>
-                    <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
+                	<% if(ub.getUid().equals(article.getUid())){ %>
+                    <a href="/Jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+                    <a href="/Jboard1/modify.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+                   	<%} %>
                     <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
                 </div>
 
@@ -207,11 +223,13 @@
                     <article>
                         <span class="nick"><%= comment.getNick() %></span>
                         <span class="date"><%= comment.getRdate().substring(2,10) %></span>
-                        <p class="content"><%= comment.getContent()%></p>                        
+                        <p class="content"><%= comment.getContent()%></p>     
+                        <% if(ub.getUid().equals(comment.getUid())){ %>                
                         <div>
                             <a href="#" class="remove" data-no="<%= comment.getNo()%>">삭제</a>
                             <a href="#" class="modify" data-no="<%= comment.getNo()%>">수정</a>
                         </div>
+                        <%} %>
                     </article>
 					<%} %>
 					

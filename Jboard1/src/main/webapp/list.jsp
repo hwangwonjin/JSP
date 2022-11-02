@@ -12,6 +12,7 @@
    <%
    		request.setCharacterEncoding("UTF-8");
    		String pg = request.getParameter("pg");
+   		
 
    		//게시물 DAO 객체 가져오기
    		int limitStart = 0;

@@ -307,7 +307,26 @@ public class ArticleDAO {
 		
 	}
 	
-	public void updateArticle() {}
+	//글 수정하기
+	public void updateArticle(String no, String title, String content ) {
+		
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			
+			psmt.close();
+			conn.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
 	
 	//조회수 증가
 	public void updateArticleHit(String no) {
@@ -344,7 +363,7 @@ public class ArticleDAO {
 		}
 		
 	}
-	
+	//댓글 수정하기
 	public int updateComment(String no, String content) {
 		int result = 0;
 		try {
@@ -362,10 +381,26 @@ public class ArticleDAO {
 		}
 		return result;
 	}
-	
-	public void deleteArticle() {}
-	
-	public int deleteComment(String no) {
+	//글 삭제하기
+	public int deleteArticle(String no) {
+		int result = 0;
+		try {
+		Connection conn =DBCP.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+		psmt.setString(1, no);
+		psmt.setString(2, no);
+		result = psmt.executeUpdate();
+		
+		psmt.close();
+		conn.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//댓글 삭제하기
+	public int deleteComment(String no ) {
 		int result = 0;
 		try {
 			Connection conn = DBCP.getConnection();
@@ -380,6 +415,36 @@ public class ArticleDAO {
 		}
 		return result;
 	}
-	
-	
+	//파일 삭제하기
+	public String deleteFile(String no) {
+		String newName = null;
+		
+		try {
+		Connection conn =DBCP.getConnection();
+		
+		conn.setAutoCommit(false);
+		PreparedStatement psmt1 = conn.prepareStatement(Sql.SELECT_FILE);
+		PreparedStatement psmt2 = conn.prepareStatement(Sql.DELETE_FILE);
+		
+		psmt1.setString(1, no);
+		psmt2.setString(1, no);
+		
+		ResultSet rs = psmt1.executeQuery();
+		psmt2.executeUpdate();
+		
+		conn.commit();
+		
+		if(rs.next()) {
+			newName = rs.getString(3);
+		}
+		
+		psmt1.close();
+		psmt2.close();
+		conn.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return newName;
+	}
 }
