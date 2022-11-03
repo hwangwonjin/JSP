@@ -17,7 +17,7 @@
 			
 			while(rs.next()){
 				ProductBean pb = new ProductBean();
-				pb.setProdno(rs.getString(1));
+				pb.setProdno(rs.getInt(1));
 				pb.setProdname(rs.getString(2));
 				pb.setStock(rs.getString(3));
 				pb.setPrice(rs.getString(4));
