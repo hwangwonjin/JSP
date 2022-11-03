@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
@@ -14,6 +17,8 @@ import kr.co.jboard1.db.Sql;
 
 //DAO(Data Access Object) : 데이터베이스 처리 클래스 
 public class ArticleDAO {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static ArticleDAO instance = new ArticleDAO();
 	public static ArticleDAO getinstance() {
@@ -27,6 +32,7 @@ public class ArticleDAO {
 		int parent = 0; 
 		
 		try{
+			logger.info("selectCountTotal");
 			Connection conn = DBCP.getConnection();
 			//트랜잭션 시작
 			conn.setAutoCommit(false);
@@ -57,6 +63,7 @@ public class ArticleDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return parent;
 	}
@@ -92,14 +99,18 @@ public class ArticleDAO {
 			Connection conn = DBCP.getConnection();
 			
 			conn.setAutoCommit(false);
-			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_COUNT_PLUSE);
 			Statement stmt = conn.createStatement();
-			psmt.setInt(1, comment.getParent());
-			psmt.setString(2, comment.getContent());
-			psmt.setString(3, comment.getUid());
-			psmt.setString(4, comment.getRegip());
+			psmt1.setInt(1, comment.getParent());
+			psmt1.setString(2, comment.getContent());
+			psmt1.setString(3, comment.getUid());
+			psmt1.setString(4, comment.getRegip());
 			
-			result = psmt.executeUpdate();
+			psmt2.setInt(1, comment.getParent());
+			
+			result = psmt1.executeUpdate();
+			psmt2.executeUpdate();
 			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
 			
 			conn.commit();
@@ -107,6 +118,7 @@ public class ArticleDAO {
 			if(rs.next()) {
 				article = new ArticleBean();
 				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
 				article.setContent(rs.getString(6));
 				article.setRdate(rs.getString(11).substring(2,10));
 				article.setNick(rs.getString(12));
@@ -114,7 +126,8 @@ public class ArticleDAO {
 			
 			rs.close();
 			stmt.close();
-			psmt.close();
+			psmt1.close();
+			psmt2.close();
 			conn.close();
 			
 		}catch(Exception e){
@@ -400,14 +413,19 @@ public class ArticleDAO {
 		return result;
 	}
 	//댓글 삭제하기
-	public int deleteComment(String no ) {
+	public int deleteComment(String no, String parent ) {
 		int result = 0;
 		try {
 			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
-			psmt.setString(1, no);
-			result = psmt.executeUpdate();
-			psmt.close();
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.DELETE_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_COUNT_MINUS);
+			psmt1.setString(1, no);
+			psmt2.setString(1, parent);
+			result = psmt1.executeUpdate();
+			psmt2.executeUpdate();
+			
+			psmt1.close();
+			psmt2.close();
 			conn.close();
 		}catch (Exception e) {
 			// TODO: handle exception
