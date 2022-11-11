@@ -15,9 +15,9 @@
 		<h3>user 수정</h3>
 		
 		<a href="#">처음으로</a>
-		<a href="/Ch09/user1/list.do">user 목록</a>
+		<a href="/Ch09/user2/list.do">user 목록</a>
 		
-		<form action="/Ch09/user1/modify.do" method="post">
+		<form action="/Ch09/user2/modify.do" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
