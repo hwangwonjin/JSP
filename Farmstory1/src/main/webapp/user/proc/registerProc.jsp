@@ -1,4 +1,7 @@
+
+<%@page import="kr.co.farmstory1.dao.UserDAO"%>
 <%@page import="kr.co.farmstory1.bean.UserBean"%>
+<%@page import="java.sql.Connection"%>
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%
 	//데이터수신
@@ -26,4 +29,9 @@
 	ub.setAddr1(addr1);
 	ub.setAddr2(addr2);
 	ub.setRegip(regip);
+	
+	//UserDAO.Instance.insertUser(ub);
+	
+	//리다이렉트
+	response.sendRedirect("/Jboard1/user/login.jsp");
 %>

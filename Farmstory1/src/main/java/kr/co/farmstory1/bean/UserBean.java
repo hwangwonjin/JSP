@@ -14,6 +14,7 @@ public class UserBean {
 	private String regip;
 	private String rdate;
 	
+	
 	public String getUid() {
 		return uid;
 	}
@@ -85,6 +86,11 @@ public class UserBean {
 	}
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
+	}
+	
+	@Override
+	public String toString() {
+		return "uid : "+uid+", name : "+name;
 	}
 	
 }
