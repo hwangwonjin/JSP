@@ -30,8 +30,8 @@
 	ub.setAddr2(addr2);
 	ub.setRegip(regip);
 	
-	//UserDAO.Instance.insertUser(ub);
+	UserDAO.Instance.insertUser(ub);
 	
 	//리다이렉트
-	response.sendRedirect("/Jboard1/user/login.jsp");
+	response.sendRedirect("/Farmstory1/user/login.jsp");
 %>

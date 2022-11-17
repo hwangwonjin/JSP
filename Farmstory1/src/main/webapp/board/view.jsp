@@ -204,7 +204,7 @@
                     <tr>
                         <td>첨부파일</td>
                         <td>
-                            <a href="./proc/dounload.jsp?group=<%= group %>&cate=<%= cate %>&parent=<%= ab.getNo()%>"><%= ab.getOriName() %></a>
+                            <a href="./proc/download.jsp?group=<%= group %>&cate=<%= cate %>&parent=<%= ab.getNo()%>"><%= ab.getOriName() %></a>
                             &nbsp;<span><%= ab.getDownload() %></span>회 다운로드
                         </td>
                     </tr>
@@ -217,9 +217,11 @@
                     </tr>
                    </table>
                    <div>
-                    <a href="#" class="btn btnRemove">삭제</a>
-                    <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnModify">수정</a>
-                    <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnList">목록</a>
+                   <% if(sessUser.getUid().equals(ab.getUid())){%>
+                    <a href="/Farmstory1/board/proc/deleteProc.jsp?group=<%= group %>&cate=<%=cate %>&no=<%= no %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+                    <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>&no=<%= no %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+                   	<% } %>
+                    <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>&no=<%= no %>&pg=<%= pg %>" class="btn btnList">목록</a>
                    </div>
 
                    <!--댓글목록-->

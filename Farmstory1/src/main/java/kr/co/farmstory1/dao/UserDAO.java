@@ -48,7 +48,9 @@ public enum UserDAO {
 			}
 
 		}
-	public TermsBean selectTrems() {
+	
+		//회원가입 약관
+		public TermsBean selectTrems() {
 		
 		TermsBean tb = null;
 		try {
@@ -116,5 +118,56 @@ public enum UserDAO {
 	public void updateUser() {}
 	public void deleteUser() {}
 	
+	//별명 체크
+		public int selectCountNick(String nick) {
+			int result = 0;
+
+			try{
+				Connection conn = DBCP.getConnection();
+				PreparedStatement psmt =conn.prepareStatement(Sql.SELECT_COUNT_NICK);
+				psmt.setString(1, nick);
+				
+				ResultSet rs = psmt.executeQuery();
+				
+				if(rs.next()){
+					 result = rs.getInt(1);
+				}
+				
+				rs.close();
+				psmt.close();
+				conn.close();
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return result;
+		}
+	
+
+	//아이디 체크
+	public int selectCountUid(String uid) {
+		 int result = 0;
+			
+			try{
+				Connection conn = DBCP.getConnection();
+				PreparedStatement psmt =conn.prepareStatement(Sql.SELECT_COUNT_UID);
+				psmt.setString(1, uid);
+				
+				ResultSet rs = psmt.executeQuery();
+				
+				if(rs.next()){
+					 result = rs.getInt(1);
+				}
+				
+				rs.close();
+				psmt.close();
+				conn.close();
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return result;
+		}
+
 	
 }

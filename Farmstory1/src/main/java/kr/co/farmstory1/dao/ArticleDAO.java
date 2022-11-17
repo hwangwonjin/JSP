@@ -56,6 +56,10 @@ public class ArticleDAO extends DBHelper{
 			
 			conn.commit();
 			
+			if(rs.next()){
+				parent = rs.getInt(1);
+			}
+			
 			close();
 			
 		}catch(Exception e) {
@@ -65,6 +69,69 @@ public class ArticleDAO extends DBHelper{
 	}
 	public void selectArticle() {}
 	
+	//최근 게시물
+	public List<ArticleBean> selectLatests(String cate1, String cate2, String cate3) {
+		
+		List<ArticleBean> latests = new ArrayList<>();
+		try {
+			logger.info("selectLatests..");
+			
+			conn = getConnection();
+			psmt= conn.prepareStatement(Sql.SELECT_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean ab = new ArticleBean();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(ab);
+			}
+			
+			close();
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		logger.debug("latests size : " + latests.size());
+		return latests;
+	}
+	
+	public synchronized List<ArticleBean> selectLatests(String cate) {
+		
+		List<ArticleBean> latests = new ArrayList<>();
+		try {
+			logger.info("selectLatests(String)..");
+			
+			conn = getConnection();
+			psmt= conn.prepareStatement(Sql.SELECT_LATEST);
+			psmt.setString(1, cate);
+			
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean ab = new ArticleBean();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(ab);
+			}
+			
+			close();
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return latests;
+	}
 	//리스트 조회
 	public List<ArticleBean> selectArticles(String cate, int start) {
 		
@@ -422,6 +489,58 @@ public class ArticleDAO extends DBHelper{
 				e.printStackTrace();
 			}
 			return result;
+		}
+		
+		//글 삭제하기
+		public int deleteArticle(String no) {
+			int result = 0;
+			try {
+			Connection conn =DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			result = psmt.executeUpdate();
+			
+			psmt.close();
+			conn.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return result;
+		}
+		
+		//파일 삭제하기
+		public String deleteFile(String no) {
+			String newName = null;
+			
+			try {
+			Connection conn =DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.SELECT_FILE);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.DELETE_FILE);
+			
+			psmt1.setString(1, no);
+			psmt2.setString(1, no);
+			
+			ResultSet rs = psmt1.executeQuery();
+			psmt2.executeUpdate();
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				newName = rs.getString(3);
+			}
+			
+			psmt1.close();
+			psmt2.close();
+			conn.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return newName;
 		}
 		
 		

@@ -17,6 +17,8 @@
 <%
 	//view에서 파일번호 받아오기
 	request.setCharacterEncoding("UTF-8");
+	String group = request.getParameter("group");
+	String cate = request.getParameter("cate");
 	String parent = request.getParameter("parent");
 
 	//파일정보 가져오기	

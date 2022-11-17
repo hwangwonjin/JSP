@@ -31,10 +31,10 @@ public class Sql {
 												+"`regip`=?,"
 												+"`rdate`=NOW()";
 	
-	public static final String INSERT_FILE = "insert into `board_file` set"
-											+"`parent`=?,"
-											+"`newName`=?,"
-											+"`oriName`=?";
+	public static final String INSERT_FILE = "insert into `board_file` set "
+											+ "`parent`=?,"
+											+ "`newName`=?,"
+											+ "`oriName`=?";
 	
 	public static final String INSERT_COMMENT = "insert into `board_article` set"
 												+"`parent`=?,"
@@ -58,7 +58,7 @@ public class Sql {
 												+ "FROM `board_article` AS a "
 												+ "LEFT JOIN `board_file` AS b "
 												+ "ON a.`no` = b. `parent` "
-												+ "WHERE `no`=? AND `cate`=?";
+												+ "WHERE `no`=?";
 	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "
@@ -70,7 +70,15 @@ public class Sql {
 														+ "JOIN `board_user` AS b USING(`uid`) "
 														+ "WHERE `parent`!=0 ORDER BY `no` DESC LIMIT 1";
 	
-	public static final String UPDATE_ARTICLE = "update `board_article` set `title`=?, `content`=?, `rdate`=NOW() where `no`=? AND `cate`=?";
+	public static final String SELECT_LATESTS = "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
+	
+	public static final String SELECT_LATEST = "SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+	
+	public static final String UPDATE_ARTICLE = "update `board_article` set `title`=?, `content`=?, `rdate`=NOW() where `no`=?";
 	
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
