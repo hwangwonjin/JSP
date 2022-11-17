@@ -19,11 +19,35 @@ public enum UserDAO {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public void insertUser() {
+	//회원가입 확인
+		public void insertUser(UserBean ub) {
+			
+			try{
+				Connection conn = DBCP.getConnection();
 		
-		
-		
-	}
+						
+				PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_USER);
+				psmt.setString(1, ub.getUid());
+				psmt.setString(2, ub.getPass());
+				psmt.setString(3, ub.getName());
+				psmt.setString(4, ub.getNick());
+				psmt.setString(5, ub.getEmail());
+				psmt.setString(6, ub.getHp());
+				psmt.setString(7, ub.getZip());
+				psmt.setString(8, ub.getAddr1());
+				psmt.setString(9, ub.getAddr1());
+				psmt.setString(10, ub.getRegip());
+				
+				psmt.executeUpdate();
+				
+				psmt.close();
+				conn.close();
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+
+		}
 	public TermsBean selectTrems() {
 		
 		TermsBean tb = null;
@@ -48,6 +72,8 @@ public enum UserDAO {
 		
 		return tb;
 	}
+	
+	//로그인 확인
 	public UserBean selectUser(String uid, String pass) {
 		
 		UserBean ub = null;

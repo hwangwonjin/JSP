@@ -226,7 +226,7 @@
           margin: 60px auto;
           overflow: hidden;
       }
-      #board> .modify > table{
+      #board> .modify  table{
           width: 100%;
           height: auto;
           border-top: 2px solid #111;
@@ -235,27 +235,27 @@
           margin-top: 6px;
       }
       #board> .modify > table tr{}
-      #board> .modify > table >caption{
+      #board> .modify  table >caption{
           text-align: left;
           margin-bottom: 4px;
       }
-      #board> .modify > table tr > td{
+      #board> .modify  table tr > td{
           padding: 12px 6px;
           border: 1px solid #e9e9e9;
           
       }
-      #board> .modify > table tr > td:nth-child(1){
+      #board> .modify  table tr > td:nth-child(1){
           width: 100px;
           background: #f5f8f9;
           text-align: center;
       }
       
-      #board> .modify > table tr > td > input{
+      #board> .modify  table tr > td > input{
           width: 400px;
           height: 24px;
           border: 0;
       }
-      #board> .modify > table tr > td > textarea{
+      #board> .modify  table tr > td > textarea{
           width: 100%;
           height: 280px;
           resize: none;

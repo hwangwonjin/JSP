@@ -26,12 +26,13 @@
 	ab.setCate(cate);
 	ab.setTitle(title);
 	ab.setContent(content);
-	ab.setFile(0);
 	ab.setUid(uid);
+	ab.setFname(fname);
 	ab.setRegip(regip);
 	
 	ArticleDAO dao = ArticleDAO.getinstance();
 	
+	//글등록
 	int parent = dao.insertArticle(ab);
 	
 	// 파일을 첨부했으면
