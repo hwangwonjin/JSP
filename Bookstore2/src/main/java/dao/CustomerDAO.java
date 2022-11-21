@@ -3,6 +3,9 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import db.DBHelper;
 import vo.CustomerVO;
 
@@ -14,8 +17,11 @@ public class CustomerDAO extends DBHelper{
 	}
 	private CustomerDAO() {}
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public void insertCustomer(CustomerVO vo) {
 		try {
+			logger.info("selectCustomer");
 			conn = getConnection();
 			psmt = conn.prepareStatement("insert into `customer` (`name`,`address`,`phone`) values (?,?,?)");
 			psmt.setString(1, vo.getName());
@@ -26,7 +32,7 @@ public class CustomerDAO extends DBHelper{
 			close();
 			
 		}catch(Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	public CustomerVO selectCustomer(String custId) {
