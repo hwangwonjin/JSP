@@ -2,16 +2,14 @@
 <%@page import="kr.co.Jboard2Vo.TermsVo"%>
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
-<%
-TermsVo tb = UserDAO.getInstance().selectTerms();
-%>
+
         <main id="user">
             <section class="terms">
                 <table border="1">
                     <caption>사이트 이용약관</caption>
                     <tr>
                         <td>
-                            <textarea name="terms">약관내용</textarea>
+                            <textarea name="terms">${vo.terms}</textarea>
                             <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
                         </td>
                     </tr>
@@ -21,7 +19,7 @@ TermsVo tb = UserDAO.getInstance().selectTerms();
                     <caption>개인정보 취급방침</caption>
                     <tr>
                         <td>
-                            <textarea name="privacy">약관내용</textarea>
+                            <textarea name="privacy">${vo.privacy}</textarea>
                             <label><input type="checkbox" class="privacy">&nbsp;동의합니다.</label>
                         </td>
                     </tr>

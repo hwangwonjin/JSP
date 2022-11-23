@@ -63,10 +63,10 @@
                         <tr>
                             <td>주소</td>
                             <td>
-                                <input type="text" name="zip" placeholder="우편번호"/>
-                                <button type="button"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
-                                <input type="text" name="addr1" placeholder="주소 검색"/>
-                                <input type="text" name="addr2" placeholder="상세주소 입력"/>
+                                <input type="text" name="zip" id="zip" placeholder="우편번호"/>
+                                <button type="button" onclick="zipcode()"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
+                                <input type="text" name="addr1" id="addr1" placeholder="주소 검색"/>
+                                <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                             </td>
                         </tr>
                     </table>

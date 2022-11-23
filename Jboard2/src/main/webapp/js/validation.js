@@ -224,15 +224,18 @@
 					dataType: 'json',
 					success: function(data) {
 						//console.log(data);
-						if(data.status == 1){
+						if(data.status > 0){
 							//메일발송 성공
-							
-							
+							console.log('here5');
+							isEmailAuthOk = true;
 							$('.emailResult').text('인증코드를 전송 했습니다. 이메일을 확인하세요');
 							$('.auth').show();
+							receivedCode = data.code;
 						}else{
 							//메일발송 실패
-							$('.emailResult').text(' 이메일을 실패했습니다. 이메일을 확인하세요');
+							console.log('here6');
+							isEmailAuthOk = false;
+							alert('메일전송이 실패했습니다. \n 다시 시도 하시기 바랍니다.');
 						}
 					}
 					
@@ -249,9 +252,19 @@
 			
 			let code = $('input[name=auth]').val();
 			
+			if(code == ''){
+				alert('이메일 확인 후 인증코드를 입력하세요');
+				return;
+			}
+			
 			if(code == receivedCode){
-				isEmailAuthOk = true;
+				isEmailAuthCodeOk = true;
+				$('input[name=email]').attr('readonly', true);
 				$('.emailResult').text('이메일이 인증되었습니다.');
+				$('.auth').hide();
+			}else{
+				isEmailAuthCodeOk = false;
+				alert('인증코드가 틀립니다. \n다시 확인 하십시오');
 			}
 			
 		});
