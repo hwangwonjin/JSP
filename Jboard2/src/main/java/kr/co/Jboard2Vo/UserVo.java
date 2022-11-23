@@ -57,6 +57,10 @@ public class UserVo {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+	public void setGrade(String grade) {
+		this.grade = Integer.parseInt(grade);
+	}
+	
 	public String getZip() {
 		return zip;
 	}
