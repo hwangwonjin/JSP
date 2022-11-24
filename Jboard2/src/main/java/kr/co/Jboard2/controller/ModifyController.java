@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/user/modify.do")
+@WebServlet("/modify.do")
 public class ModifyController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
