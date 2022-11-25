@@ -1,6 +1,7 @@
 package kr.co.Jboard2.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,11 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.Jboard2.service.article.ArticleService;
+import kr.co.Jboard2Vo.ArticleVo;
+
 @WebServlet("/list.do")
 public class ListController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-
+	private ArticleService service = ArticleService.instance;
+	
 	@Override
 	public void init() throws ServletException {
 		
@@ -21,6 +26,37 @@ public class ListController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String pg = req.getParameter("pg");
+   		
+		//현재 페이지 번호
+		int currentPage = service.getCurrentPage(pg);
+		
+   		//전체 게시물 갯수 구하기
+   		int total = service.selectCountTotal();
+   		
+   		//페이지 마지막 번호 계산
+   		int lastPageNum = service.getLastPageNum(total);
+   		
+   		//페이지 그룹 start, end 계산
+   		int[] result =  service.getpageGroupNum(currentPage, lastPageNum);
+   		
+   		//페이지 시작 번호
+   		int pageStartNum = service.getPageStartNum(total, currentPage);
+   		
+   		//시작 인덱스
+   		int start = service.getStartNum(currentPage);
+   		
+		//글 가져오기
+		List<ArticleVo> articles = service.selectArticles(start);
+		
+		req.setAttribute("articles", articles);
+		req.setAttribute("currentPage", currentPage);
+		req.setAttribute("lastPageNum", lastPageNum);
+		req.setAttribute("pageGroupStart", result[0]);
+		req.setAttribute("pageGroupEnd", result[1]);
+		req.setAttribute("pageStartNum", pageStartNum+1);
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 		dispatcher.forward(req, resp);
 	}

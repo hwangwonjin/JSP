@@ -1,8 +1,12 @@
 package kr.co.Jboard2.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 
 import kr.co.Jboard2.service.article.ArticleService;
 
@@ -38,25 +46,44 @@ public class WriteController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
-		String fname = req.getParameter("fname");
-		String uid = req.getParameter("uid");
+		//파일업로드
+		ServletContext ctx = req.getServletContext();
+		String path = ctx.getRealPath("/file");
+		
+		MultipartRequest mr  = service.uploadFile(req, path);
+		
+		//multipart 폼 데이터 수신
+		String title = mr.getParameter("title");
+		String content = mr.getParameter("content");
+		String uid = mr.getParameter("uid");
+		String fname = mr.getFilesystemName("fname");
 		String regip = req.getRemoteAddr();
 		
-		logger.info("1");
+		ArticleVo article = new ArticleVo();
+		article.setTitle(title);
+		article.setContent(content);
+		article.setUid(uid);
+		article.setFname(fname);
+		article.setRegip(regip);
 		
-		ArticleVo ar  = new ArticleVo();
-		ar.setTitle(title);
-		ar.setContent(content);
-		ar.setFname(fname);
-		ar.setUid(uid);
-		ar.setRegip(regip);
-		logger.info("3");
 		
-		service.insertArticle(ar);
-		logger.info("4");
 		
+		
+		//글 등록
+		int parent = service.insertArticle(article);
+			
+		// 파일을 첨부했으면
+		if(fname != null){
+			//파일명 수정
+			String newName = service.renameFile(fname, uid, path);
+			
+			//파일 테이블 insert
+			
+			service.insertFile(parent, newName, fname);
+		}
+		
+		
+		//리다이렉트
 		resp.sendRedirect("/Jboard2/list.do");
 	}
 }
