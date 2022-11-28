@@ -9,27 +9,28 @@
                     <c:forEach var="article" items="${articles}">
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" name="title" readonly/>${article.title}</td>
+                        <td><input type="text" name="title" value="${article.title}" readonly/></td>
                     </tr>
                    </c:forEach> 
                    <c:if test="${article.File > 0}">
                     <tr>
                         <th>파일</th>
-                        <td><a href="/Jboard2/">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
+                        <td><a href="/Jboard2/">${article.OriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
                     </tr>
                     </c:if>
-                    <tr>
-                        <th>내용</th>
-                        <td>
-                            <textarea name="content" readonly>내용 샘플입니다.</textarea>
-                        </td>
-                    </tr>
-                                       
+                    <c:forEach var="article" items="${articles}">
+	                    <tr>
+	                        <th>내용</th>
+	                        <td>
+	                            <textarea name="content" readonly>${article.content}</textarea>
+	                        </td>
+	                    </tr>
+                    </c:forEach>                  
                 </table>
                 
                 <div>
                 	<c:if test="${sessUser.uid.equals(article.uid)}">
-	                    <a href="/Jboard2/delete.do?no=${article.no}$pg=${article.pg}" class="btn btnRemove">삭제</a>
+	                    <a href="/Jboard2/delete.do?no=${article.no}$pg=${pg}" class="btn btnRemove">삭제</a>
 	                    <a href="./modify.html" class="btn btnModify">수정</a>
 	                    </c:if>
 	                    <a href="./list.html" class="btn btnList">목록</a>

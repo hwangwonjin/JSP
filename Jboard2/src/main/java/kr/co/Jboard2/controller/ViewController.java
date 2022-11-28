@@ -43,7 +43,8 @@ public class ViewController extends HttpServlet{
 		
 		req.setAttribute("hit", hit);
 		req.setAttribute("article", article);
-		req.setAttribute("commetns", comments);
+		req.setAttribute("comments", comments);
+		req.setAttribute("pg", pg);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/view.jsp");
 		dispatcher.forward(req, resp);
