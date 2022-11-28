@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.Jboard2.Vo.TermsVo;
 import kr.co.Jboard2.service.user.UserService;
-import kr.co.Jboard2Vo.TermsVo;
 
 @WebServlet("/user/terms.do")
 public class TermsController extends HttpServlet{

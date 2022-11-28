@@ -19,10 +19,8 @@ import org.slf4j.LoggerFactory;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-
+import kr.co.Jboard2.Vo.ArticleVo;
 import kr.co.Jboard2.service.article.ArticleService;
-
-import kr.co.Jboard2Vo.ArticleVo;
 
 @WebServlet("/write.do")
 public class WriteController extends HttpServlet{

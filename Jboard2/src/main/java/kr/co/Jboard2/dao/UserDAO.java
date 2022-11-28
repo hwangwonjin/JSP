@@ -4,10 +4,10 @@ import org.apache.tomcat.jni.OS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.Jboard2.Vo.TermsVo;
+import kr.co.Jboard2.Vo.UserVo;
 import kr.co.Jboard2.db.DBHelper;
 import kr.co.Jboard2.db.Sql;
-import kr.co.Jboard2Vo.TermsVo;
-import kr.co.Jboard2Vo.UserVo;
 
 
 

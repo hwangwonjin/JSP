@@ -1,5 +1,5 @@
 <%@page import="kr.co.Jboard2.dao.UserDAO"%>
-<%@page import="kr.co.Jboard2Vo.TermsVo"%>
+<%@page import="kr.co.Jboard2.Vo.TermsVo"%>
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
 

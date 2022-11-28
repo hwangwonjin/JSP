@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.co.Jboard2.Vo.ArticleVo;
 import kr.co.Jboard2.dao.ArticleDAO;
-import kr.co.Jboard2Vo.ArticleVo;
 
 public enum ArticleService {
 
@@ -37,12 +37,16 @@ public enum ArticleService {
 		dao.insertFile(parent, newName, fname);
 	}
 	
-	public int selectCountTotal() {
-	  	return dao.selectCountTotal();
+	public int selectCountTotal(String search) {
+	  	return dao.selectCountTotal(search);
 	}
 	
 	public List<ArticleVo> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
+	}
+	
+	public List<ArticleVo> selectArticlesByKeyword(String keyword, int start) {
+		return dao.selectArticlesByKeyword(keyword, start);
 	}
 	
 	//추가적인 서비스 로직
@@ -77,7 +81,7 @@ public enum ArticleService {
 			if(total % 10 == 0){
 	   			lastPageNum = total / 10;
 	   		}else{
-	   			lastPageNum = total / 10;
+	   			lastPageNum = total / 10 + 1;
 	   		}
 			
 			return lastPageNum;
@@ -98,8 +102,8 @@ public enum ArticleService {
 	}
 	
 	public int getPageStartNum(int total, int currentPage) {
-		int strat = (currentPage - 1) * 10;
-		return total - strat;
+		int start = (currentPage - 1) * 10;
+		return total - start;
 	}
 	
 	public int getCurrentPage(String pg) {

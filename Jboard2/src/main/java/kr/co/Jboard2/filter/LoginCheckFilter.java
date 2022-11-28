@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.Jboard2Vo.UserVo;
+import kr.co.Jboard2.Vo.UserVo;
 
 
 public class LoginCheckFilter implements Filter{

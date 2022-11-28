@@ -10,12 +10,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
+import kr.co.Jboard2.Vo.ArticleVo;
+import kr.co.Jboard2.Vo.FileVo;
 import kr.co.Jboard2.db.DBHelper;
 import kr.co.Jboard2.db.Sql;
-import kr.co.Jboard2Vo.ArticleVo;
-import kr.co.Jboard2Vo.FileVo;
 
 //DAO(Data Access Object) : 데이터베이스 처리 클래스
 public class ArticleDAO extends DBHelper {
@@ -129,40 +127,56 @@ public class ArticleDAO extends DBHelper {
 		return article;
 	}
 	
-	public int selectCountTotal() {
+	public int selectCountTotal(String search) {
 		
 		int total = 0;
 		
 		try {
 			logger.info("selectCountTotal");
-			Connection conn = getConnection();
-			Statement stmt = conn.createStatement();
+			conn = getConnection();
+		
+			if(search == null) {
+				stmt = conn.createStatement();
+				rs =stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			}else {
+				psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_FOR_SEARCH);
+				psmt.setString(1, "%"+search+"%");
+				psmt.setString(2, "%"+search+"%");
+				rs = psmt.executeQuery();
+			}
 			
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}
 			
-			rs.close();
-			stmt.close();
-			conn.close();
+			close();
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+		
+		logger.debug("total : " + total);
+		
 		return total;
 	}
+	
+	
 	
 	public ArticleVo selectArticle(String no) {
 		
 		ArticleVo article = null;
 		
 		try{
+			logger.info("selectArticle...");
 			Connection conn = getConnection();
+			logger.info("1");
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			logger.info("2");
 			psmt.setString(1, no);
+			logger.info("3");
 			
 			ResultSet rs = psmt.executeQuery();
+			logger.info("4");
 			
 			if(rs.next()){
 				article = new ArticleVo();
@@ -183,16 +197,14 @@ public class ArticleDAO extends DBHelper {
 				article.setOriName(rs.getString(15));
 				article.setDownload(rs.getInt(16));
 			}
-			
-			rs.close();
-			psmt.close();
-			conn.close();
+			logger.info("5");
+			close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
-		
+		logger.debug("article : " + article);
 		return article;
 	}
 	
@@ -231,6 +243,47 @@ public class ArticleDAO extends DBHelper {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+		
+		return articles;
+	}
+
+	public List<ArticleVo>  selectArticlesByKeyword(String keyword, int start) {
+		
+		List<ArticleVo> articles = new ArrayList<>();
+		
+		try {
+			logger.info("selectArticlesByKeyword..");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES_BY_KEYWORD);
+			psmt.setString(1, "%"+keyword+"%");
+			psmt.setString(2, "%"+keyword+"%");
+			psmt.setInt(3, start);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				ArticleVo article = new ArticleVo();
+				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setComment(rs.getInt(3));
+				article.setCate(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setContent(rs.getString(6));
+				article.setFile(rs.getInt(7));
+				article.setHit(rs.getInt(8));
+				article.setUid(rs.getString(9));
+				article.setRegip(rs.getString(10));
+				article.setRdate(rs.getString(11));
+				article.setNick(rs.getString(12));
+				
+				articles.add(article);			
+			}
+			
+			close();
+					
+		}catch(Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return articles;

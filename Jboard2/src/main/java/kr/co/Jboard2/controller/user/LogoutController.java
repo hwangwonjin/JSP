@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.co.Jboard2.Vo.UserVo;
 import kr.co.Jboard2.service.user.UserService;
-import kr.co.Jboard2Vo.UserVo;
 @WebServlet("/user/logout.do")
 public class LogoutController extends HttpServlet{
 

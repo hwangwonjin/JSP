@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.Jboard2.Vo.UserVo;
 import kr.co.Jboard2.service.user.UserService;
-import kr.co.Jboard2Vo.UserVo;
 
 @WebServlet("/user/register.do")
 public class RegisterController extends HttpServlet{

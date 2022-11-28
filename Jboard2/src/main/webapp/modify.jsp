@@ -3,7 +3,9 @@
         <main id="board">
             <section class="modify">
 
-                <form action="#">
+                <form action="/Jboard2/modify.do" method="post">
+                	<input type="hidden" name="no" value="${no}">
+                	<input type="hidden" name="pg" value="${pg}">
                     <table border="0">
                         <caption>글수정</caption>
                         <tr>
@@ -25,7 +27,7 @@
                     </table>
                     
                     <div>
-                        <a href="./view.html" class="btn btnCancel">취소</a>
+                        <a href="./view.do?no=${no}&pg=${pg}" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>

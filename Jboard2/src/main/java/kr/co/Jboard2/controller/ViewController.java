@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import kr.co.Jboard2.Vo.ArticleVo;
 import kr.co.Jboard2.service.article.ArticleService;
-import kr.co.Jboard2Vo.ArticleVo;
 
 @WebServlet("/view.do")
 public class ViewController extends HttpServlet{
@@ -33,7 +32,6 @@ public class ViewController extends HttpServlet{
 		
 		//조회수 +1
 		int hit = service.updateArticleHit(no);
-		
 		
 		//글 가져오기
 		 ArticleVo article = service.selectArticle(no);

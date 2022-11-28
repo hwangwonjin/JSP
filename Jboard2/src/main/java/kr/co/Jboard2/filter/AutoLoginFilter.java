@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.Jboard2.Vo.UserVo;
 import kr.co.Jboard2.service.user.UserService;
-import kr.co.Jboard2Vo.UserVo;
 
 
 public class AutoLoginFilter implements Filter{

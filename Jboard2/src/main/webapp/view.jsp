@@ -6,32 +6,28 @@
                 
                 <table border="0">
                     <caption>글보기</caption>
-                    <c:forEach var="article" items="${articles}">
                     <tr>
                         <th>제목</th>
                         <td><input type="text" name="title" value="${article.title}" readonly/></td>
                     </tr>
-                   </c:forEach> 
-                   <c:if test="${article.File > 0}">
+                   <c:if test="${article.file > 0}">
                     <tr>
                         <th>파일</th>
-                        <td><a href="/Jboard2/">${article.OriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
+                        <td><a href="/Jboard2/">${article.oriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
                     </tr>
                     </c:if>
-                    <c:forEach var="article" items="${articles}">
-	                    <tr>
-	                        <th>내용</th>
-	                        <td>
-	                            <textarea name="content" readonly>${article.content}</textarea>
-	                        </td>
-	                    </tr>
-                    </c:forEach>                  
+                    <tr>
+                        <th>내용</th>
+                        <td>
+                            <textarea name="content" readonly>${article.content}</textarea>
+                        </td>
+                    </tr>
                 </table>
                 
                 <div>
                 	<c:if test="${sessUser.uid.equals(article.uid)}">
 	                    <a href="/Jboard2/delete.do?no=${article.no}$pg=${pg}" class="btn btnRemove">삭제</a>
-	                    <a href="./modify.html" class="btn btnModify">수정</a>
+	                    <a href="./modify.do?no=${article.no}&pg=${pg}" class="btn btnModify">수정</a>
 	                    </c:if>
 	                    <a href="./list.html" class="btn btnList">목록</a>
                 	

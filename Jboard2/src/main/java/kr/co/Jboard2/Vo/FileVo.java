@@ -1,4 +1,4 @@
-package kr.co.Jboard2Vo;
+package kr.co.Jboard2.Vo;
 
 public class FileVo {
 
