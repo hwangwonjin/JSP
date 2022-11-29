@@ -44,7 +44,19 @@ public class ListController extends HttpServlet{
 		//페이지 그룹 start, end 계산
 		int[] result = service.getpageGroupNum(currentPage, lastPageNum);
 		
-		List<ArticleVo> articles = service.selectArticles();
+		//페이지 시작 번호
+		int pageStartNum = service.getPageStartNum(total, currentPage);
+		
+		//시작 인덱스
+		int start = service.getStartNum(currentPage);
+		
+		List<ArticleVo> articles = null;
+			if(search == null) {
+				articles = service.selectArticles(start);
+			}else {
+				articles = service.selectArticlesByKeyword(search, start);
+			}
+				
 		
 		req.setAttribute("articles", articles);
 		req.setAttribute("group", group);

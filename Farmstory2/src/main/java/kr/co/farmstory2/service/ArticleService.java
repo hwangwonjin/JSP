@@ -34,6 +34,10 @@ public enum ArticleService {
 	public List<ArticleVo> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
 	}
+	public List<ArticleVo> selectArticlesByKeyword(String keyword, int start) {
+		return dao.selectArticlesByKeyword(keyword, start);
+	}
+	
 	//추가적인 서비스 로직
 			public MultipartRequest uploadFile(HttpServletRequest req, String path) throws IOException {
 				
