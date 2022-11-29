@@ -1,6 +1,6 @@
 package kr.co.farmstory2.Vo;
 
-public class FileBean {
+public class FileVo {
 
 	private int fno;
 	private int parent;

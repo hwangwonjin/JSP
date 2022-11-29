@@ -2,19 +2,20 @@ package kr.co.farmstory2.Controller.user;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
-import kr.co.farmstory2.Vo.TermsVo;
+import kr.co.farmstory2.Vo.UserVo;
 import kr.co.farmstory2.service.UserService;
 
-@WebServlet("/user/terms.do")
-public class TermsController extends HttpServlet{
+
+@WebServlet("/user/logout.do")
+public class LogoutController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.instance;
@@ -26,16 +27,28 @@ public class TermsController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession sess =req.getSession();
+		UserVo sessUser = (UserVo)sess.getAttribute("sessUser");
+		String uid = sessUser.getUid();
 		
-		TermsVo vo = service.selectTerms();
-		req.setAttribute("vo", vo);
+		//세션삭제
+		sess.removeAttribute("sessUser");
+		sess.invalidate();
 		
-		RequestDispatcher dispatcher =req.getRequestDispatcher("/user/terms.jsp");
-		dispatcher.forward(req, resp);
+		//쿠키삭제
+		Cookie cookie = new Cookie("SESSID", null);
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		resp.addCookie(cookie);
+		
+		//데이터베이스 사용자 sessId update
+		service.updateUserForSessionOut(uid);
+		
+		resp.sendRedirect("/Farmstory2/user/login.do?success=200");
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	
 	}
 }

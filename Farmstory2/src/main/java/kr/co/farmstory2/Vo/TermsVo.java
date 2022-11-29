@@ -1,6 +1,6 @@
 package kr.co.farmstory2.Vo;
 
-public class TermsBean {
+public class TermsVo {
 
 	private String terms;
 	private String privacy;

@@ -1,6 +1,7 @@
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <jsp:include page="../_header.jsp"></jsp:include>
 <jsp:include page="./_${group}.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <main id="board">
             <section class="list">                
                 <form action="#">
@@ -16,7 +17,8 @@
                         <th>글쓴이</th>
                         <th>날짜</th>
                         <th>조회</th>
-                    </tr>                    
+                    </tr> 
+                    <c:forEach var="article" items="${articles}">                  
                     <tr>
                         <td>1</td>
                         <td><a href="./view.do">테스트 제목입니다.[3]</a></td>
@@ -24,6 +26,7 @@
                         <td>20-05-12</td>
                         <td>12</td>
                     </tr>
+                    </c:forEach> 
                 </table>
 
                 <div class="page">

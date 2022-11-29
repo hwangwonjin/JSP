@@ -1,6 +1,6 @@
 package kr.co.farmstory2.Vo;
 
-public class ArticleBean {
+public class ArticleVo {
 
 	private int no;
 	private int parent;

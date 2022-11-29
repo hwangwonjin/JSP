@@ -1,6 +1,6 @@
 package kr.co.farmstory2.Vo;
 
-public class UserBean {
+public class UserVo {
 	private String uid;
 	private String pass;
 	private String name;

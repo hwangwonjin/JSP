@@ -1,37 +1,45 @@
 package kr.co.farmstory2.Controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
 
-import kr.co.farmstory2.Vo.TermsVo;
 import kr.co.farmstory2.service.UserService;
 
-@WebServlet("/user/terms.do")
-public class TermsController extends HttpServlet{
+
+
+@WebServlet("/user/emailAuth.do")
+public class EmailAuthController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.instance;
 
 	@Override
 	public void init() throws ServletException {
-		
+	
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+		String email = req.getParameter("email");
 		
-		TermsVo vo = service.selectTerms();
-		req.setAttribute("vo", vo);
+		int[] result = service.sendEmailCode(email);
 		
-		RequestDispatcher dispatcher =req.getRequestDispatcher("/user/terms.jsp");
-		dispatcher.forward(req, resp);
+		//Json 출력
+		JsonObject json = new JsonObject();
+		json.addProperty("status", result[0]);
+		json.addProperty("code", result[1]);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
 	}
 	
 	@Override

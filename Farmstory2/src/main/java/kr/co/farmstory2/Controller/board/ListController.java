@@ -1,6 +1,7 @@
 package kr.co.farmstory2.Controller.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,11 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.farmstory2.Vo.ArticleVo;
+import kr.co.farmstory2.service.ArticleService;
+
 @WebServlet("/board/list.do")
 public class ListController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-
+	private ArticleService service = ArticleService.instance;
+	
 	@Override
 	public void init() throws ServletException {
 		
@@ -24,7 +29,24 @@ public class ListController extends HttpServlet{
 		
 		String group = req.getParameter("group");
 		String cate = req.getParameter("cate");
+		String pg = req.getParameter("pg");
+		String search  = req.getParameter("search");
 		
+		//현재 페이지 번호
+		int currentPage = service.getCurrentPage(pg);
+		
+		//전체 게시물 갯수 구하기
+		int total = service.getCurrentPage(search);
+		
+		//페이지 마지막 번호 계산
+		int lastPageNum = service.getLastPageNum(total);
+		
+		//페이지 그룹 start, end 계산
+		int[] result = service.getpageGroupNum(currentPage, lastPageNum);
+		
+		List<ArticleVo> articles = service.selectArticles();
+		
+		req.setAttribute("articles", articles);
 		req.setAttribute("group", group);
 		req.setAttribute("cate", cate);
 		
