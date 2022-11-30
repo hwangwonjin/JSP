@@ -10,12 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmstory2.Vo.ArticleVo;
 import kr.co.farmstory2.service.ArticleService;
 
 @WebServlet("/board/list.do")
 public class ListController extends HttpServlet{
 
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.instance;
 	
@@ -37,7 +43,7 @@ public class ListController extends HttpServlet{
 		int currentPage = service.getCurrentPage(pg);
 		
 		//전체 게시물 갯수 구하기
-		int total = service.selectCountTotal(search);
+		int total = service.selectCountTotal(cate, search);
 		
 		//페이지 마지막 번호 계산
 		int lastPageNum = service.getLastPageNum(total);
@@ -52,17 +58,23 @@ public class ListController extends HttpServlet{
 		int start = service.getStartNum(currentPage);
 		
 		List<ArticleVo> articles = null;
-			if(search == null) {
-				articles = service.selectArticles(start, cate);
-			}else {
-				articles = service.selectArticlesByKeyword(search, start);
-			}
+		
+		if(search == null) {
+			articles = service.selectArticles(start, cate);
+		}else {
+			articles = service.selectArticlesByKeyword(cate, search, start);
+		}
 				
+		logger.debug("currentPage : " + currentPage);
+		logger.debug("lastPageNum : " + lastPageNum);
+		logger.debug("pageGroupStart : " + result[0]);
+		logger.debug("pageGroupEnd : " + result[1]);
+		logger.debug("pageStartNum : " + pageStartNum);
 		
 		req.setAttribute("articles", articles);
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("lastPageNum", lastPageNum);
-		req.setAttribute("PageGroupStart", result[0]);
+		req.setAttribute("pageGroupStart", result[0]);
 		req.setAttribute("pageGroupEnd", result[1]);
 		req.setAttribute("pageStartNum", pageStartNum+1);
 		req.setAttribute("search", search);

@@ -35,11 +35,12 @@ public class ArticleDAO extends DBHelper {
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
 			Statement stmt = conn.createStatement();
 			
-			psmt.setString(1, article.getTitle());
-			psmt.setString(2, article.getContent());
-			psmt.setInt(3, article.getFname() == null ? 0 : 1);
-			psmt.setString(4, article.getUid());
-			psmt.setString(5, article.getRegip());
+			psmt.setString(1, article.getCate());
+			psmt.setString(2, article.getTitle());
+			psmt.setString(3, article.getContent());
+			psmt.setInt(4, article.getFname() == null ? 0 : 1);
+			psmt.setString(5, article.getUid());
+			psmt.setString(6, article.getRegip());
 			
 			psmt.executeUpdate();
 			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
@@ -129,7 +130,7 @@ public class ArticleDAO extends DBHelper {
 		return article;
 	}
 	
-	public int selectCountTotal(String search) {
+	public int selectCountTotal(String cate, String search) {
 		
 		int total = 0;
 		
@@ -138,15 +139,16 @@ public class ArticleDAO extends DBHelper {
 			conn = getConnection();
 		
 			if(search == null) {
-				stmt = conn.createStatement();
-				rs =stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+				psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL);
+				psmt.setString(1, cate);
+				rs = psmt.executeQuery();
 			}else {
 				psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_FOR_SEARCH);
-				psmt.setString(1, "%"+search+"%");
+				psmt.setString(1, cate);
 				psmt.setString(2, "%"+search+"%");
+				psmt.setString(3, "%"+search+"%");
 				rs = psmt.executeQuery();
 			}
-			
 			
 			if(rs.next()) {
 				total = rs.getInt(1);
@@ -255,7 +257,7 @@ public class ArticleDAO extends DBHelper {
 		return articles;
 	}
 
-	public List<ArticleVo>  selectArticlesByKeyword(String keyword, int start) {
+	public List<ArticleVo>  selectArticlesByKeyword(String cate, String keyword, int start) {
 		
 		List<ArticleVo> articles = new ArrayList<>();
 		
@@ -263,9 +265,10 @@ public class ArticleDAO extends DBHelper {
 			logger.info("selectArticlesByKeyword..");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES_BY_KEYWORD);
-			psmt.setString(1, "%"+keyword+"%");
+			psmt.setString(1, cate);
 			psmt.setString(2, "%"+keyword+"%");
-			psmt.setInt(3, start);
+			psmt.setString(3, "%"+keyword+"%");
+			psmt.setInt(4, start);
 			
 			ResultSet rs = psmt.executeQuery();
 			
@@ -497,6 +500,7 @@ public class ArticleDAO extends DBHelper {
 		
 		return result;
 	}
+
 	
 	
 	

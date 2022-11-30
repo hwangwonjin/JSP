@@ -28,18 +28,30 @@ public enum ArticleService {
 	private ArticleService() {
 		dao = new ArticleDAO();
 	}
-	public void insertArticle(ArticleVo article) {
-		dao.insertArticle(article);
+	public int insertArticle(ArticleVo article) {
+		return dao.insertArticle(article);
 	}
-	public int selectCountTotal(String search) {
-		return dao.selectCountTotal(search);
+	public void insertFile(int parent, String newName, String fname) {
+		dao.insertFile(parent, newName, fname);
+	}
+	
+	public ArticleVo selectArticle(String no) {
+		return dao.selectArticle(no);
+	}
+	
+	public int selectCountTotal(String cate, String search) {
+		return dao.selectCountTotal(cate, search);
 	}
 	
 	public List<ArticleVo> selectArticles(int limitStart, String cate) {
 		return dao.selectArticles(limitStart, cate);
 	}
-	public List<ArticleVo> selectArticlesByKeyword(String keyword, int start) {
-		return dao.selectArticlesByKeyword(keyword, start);
+	public List<ArticleVo> selectArticlesByKeyword(String cate, String keyword, int start) {
+		return dao.selectArticlesByKeyword(cate, keyword, start);
+	}
+	
+	public List<ArticleVo> selectComments(String parent) {
+		return dao.selectComments(parent);
 	}
 	
 	//추가적인 서비스 로직
@@ -112,4 +124,12 @@ public enum ArticleService {
 		public int getStartNum(int currentPage) {
 			return(currentPage -1 ) * 10;
 		}
+		
+		public int updateArticleHit(String no) {
+			return dao.updateArticleHit(no);
+		}
+		public void updateArticle(String no, String title, String content) {
+			dao.updateArticle(no, title, content);
+		}
+		
 }
