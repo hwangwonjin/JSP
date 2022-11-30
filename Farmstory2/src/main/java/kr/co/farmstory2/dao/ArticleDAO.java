@@ -171,7 +171,7 @@ public class ArticleDAO extends DBHelper {
 		try{
 			logger.info("selectArticle...");
 			Connection conn = getConnection();
-			logger.info("1");
+			logger.info("conn : " +conn);
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
 			logger.info("2");
 			psmt.setString(1, no);
@@ -210,14 +210,20 @@ public class ArticleDAO extends DBHelper {
 		return article;
 	}
 	
-	public List<ArticleVo> selectArticles(int limitStart) {
+	public List<ArticleVo> selectArticles(int limitStart, String cate) {
 		
 		List<ArticleVo> articles = new ArrayList<>();
 		
 		try{
+			logger.info("selectArticles...");
 			conn = getConnection();
+			logger.info("conn : " +conn);
 			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
-			psmt.setInt(1, limitStart);
+			logger.info("3");
+			psmt.setString(1, cate);
+			logger.info("4");
+			psmt.setInt(2, limitStart);
+			logger.info("5");
 			
 			ResultSet rs = psmt.executeQuery();
 			
@@ -242,9 +248,10 @@ public class ArticleDAO extends DBHelper {
 			close();
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
+		logger.debug("articles size : " + articles.size());
 		return articles;
 	}
 

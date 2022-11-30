@@ -31,8 +31,12 @@ public enum ArticleService {
 	public void insertArticle(ArticleVo article) {
 		dao.insertArticle(article);
 	}
-	public List<ArticleVo> selectArticles(int limitStart) {
-		return dao.selectArticles(limitStart);
+	public int selectCountTotal(String search) {
+		return dao.selectCountTotal(search);
+	}
+	
+	public List<ArticleVo> selectArticles(int limitStart, String cate) {
+		return dao.selectArticles(limitStart, cate);
 	}
 	public List<ArticleVo> selectArticlesByKeyword(String keyword, int start) {
 		return dao.selectArticlesByKeyword(keyword, start);

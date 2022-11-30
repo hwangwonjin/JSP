@@ -32,11 +32,12 @@ public class ListController extends HttpServlet{
 		String pg = req.getParameter("pg");
 		String search  = req.getParameter("search");
 		
+		
 		//현재 페이지 번호
 		int currentPage = service.getCurrentPage(pg);
 		
 		//전체 게시물 갯수 구하기
-		int total = service.getCurrentPage(search);
+		int total = service.selectCountTotal(search);
 		
 		//페이지 마지막 번호 계산
 		int lastPageNum = service.getLastPageNum(total);
@@ -52,13 +53,20 @@ public class ListController extends HttpServlet{
 		
 		List<ArticleVo> articles = null;
 			if(search == null) {
-				articles = service.selectArticles(start);
+				articles = service.selectArticles(start, cate);
 			}else {
 				articles = service.selectArticlesByKeyword(search, start);
 			}
 				
 		
 		req.setAttribute("articles", articles);
+		req.setAttribute("currentPage", currentPage);
+		req.setAttribute("lastPageNum", lastPageNum);
+		req.setAttribute("PageGroupStart", result[0]);
+		req.setAttribute("pageGroupEnd", result[1]);
+		req.setAttribute("pageStartNum", pageStartNum+1);
+		req.setAttribute("search", search);
+		req.setAttribute("pg", pg);
 		req.setAttribute("group", group);
 		req.setAttribute("cate", cate);
 		
