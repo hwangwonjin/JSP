@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.oreilly.servlet.MultipartRequest;
 
 import kr.co.farmstory2.Vo.ArticleVo;
@@ -23,6 +26,8 @@ public class WriteController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.instance;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
 	@Override
 	public void init() throws ServletException {
@@ -48,15 +53,23 @@ public class WriteController extends HttpServlet{
 			ServletContext ctx = req.getServletContext();
 			String path = ctx.getRealPath("/file");
 			
+			logger.info("writeController...");
 			MultipartRequest mr  = service.uploadFile(req, path);
 			
 			//데이터 수신
+			logger.info("1");
 			String group = mr.getParameter("group");
+			logger.info("2");
 			String cate = mr.getParameter("cate");
+			logger.info("3");
 			String title = mr.getParameter("title");
+			logger.info("4");
 			String content = mr.getParameter("content");
+			logger.info("5");
 			String uid = mr.getParameter("uid");
+			logger.info("6");
 			String fname = mr.getParameter("fname");
+			logger.info("7");
 			String regip = req.getRemoteAddr();
 			
 			ArticleVo article = new ArticleVo();
@@ -66,6 +79,8 @@ public class WriteController extends HttpServlet{
 			article.setUid(uid);
 			article.setFname(fname);
 			article.setRegip(regip);
+			
+			logger.debug("article1 : " +article);
 			
 			//글 등록
 			int parent = service.insertArticle(article);
@@ -78,7 +93,7 @@ public class WriteController extends HttpServlet{
 				//파일 테이블 추가
 				service.insertFile(parent, newName, fname);
 			}
-			
+			logger.debug("article2 : " +article);
 			//리다이렉트
 			resp.sendRedirect("/Farmstory2/board/list.do?group="+group+"&cate="+cate);
 	}

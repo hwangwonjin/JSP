@@ -131,5 +131,11 @@ public enum ArticleService {
 		public void updateArticle(String no, String title, String content) {
 			dao.updateArticle(no, title, content);
 		}
+		public int deleteArticle(String no) {
+			return dao.deleteArticle(no);
+		}
+		public String deleteFile(String no) {
+			return dao.deleteFile(no);
+		}
 		
 }

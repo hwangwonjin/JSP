@@ -427,7 +427,8 @@ public class ArticleDAO extends DBHelper {
 		return result;
 	}
 	
-	public void deleteArticle(String no) {
+	public int deleteArticle(String no) {
+		int result = 0;
 		try {
 			Connection conn = getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
@@ -439,7 +440,7 @@ public class ArticleDAO extends DBHelper {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return result;
 	}
 	
 	public String deleteFile(String no) {
