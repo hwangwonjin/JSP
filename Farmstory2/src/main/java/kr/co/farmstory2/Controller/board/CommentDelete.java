@@ -1,7 +1,7 @@
-package kr.co.farmstory2.Controller;
+package kr.co.farmstory2.Controller.board;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,33 +10,50 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.farmstory2.Vo.ArticleVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
+
 import kr.co.farmstory2.service.ArticleService;
 
-@WebServlet("/index.do")
-public class IndexController extends HttpServlet{
+@WebServlet("/board/commentDelete.do")
+public class CommentDelete extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.instance;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	
 	@Override
 	public void init() throws ServletException {
+		
 		
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<ArticleVo> latests = service.selectLatests("grow", "school", "story");
+		String no = req.getParameter("no");
+		String parent = req.getParameter("parent");
 		
-		req.setAttribute("latests", latests);
+		int result = service.deleteComment(no, parent);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
-		dispatcher.forward(req, resp);
+		logger.debug("result : "+result);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		logger.debug("result1 : "+result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
+		logger.debug("writer : "+writer);
+		
 		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	
 	}
 }

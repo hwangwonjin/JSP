@@ -34,6 +34,9 @@ public enum ArticleService {
 	public void insertFile(int parent, String newName, String fname) {
 		dao.insertFile(parent, newName, fname);
 	}
+	public ArticleVo insertComment(ArticleVo comment) {
+		return dao.insertComment(comment);
+	}
 	
 	public ArticleVo selectArticle(String no) {
 		return dao.selectArticle(no);
@@ -53,6 +56,10 @@ public enum ArticleService {
 	public List<ArticleVo> selectComments(String parent) {
 		return dao.selectComments(parent);
 	}
+	public List<ArticleVo> selectLatests(String cate1, String cate2, String cate3) {
+		return dao.selectLatests(cate1, cate2, cate3);
+	}
+	
 	
 	//추가적인 서비스 로직
 			public MultipartRequest uploadFile(HttpServletRequest req, String path) throws IOException {
@@ -131,11 +138,16 @@ public enum ArticleService {
 		public void updateArticle(String no, String title, String content) {
 			dao.updateArticle(no, title, content);
 		}
+		public int updateComment(String no, String content) {
+			return dao.updateComment(no, content);
+		}
 		public int deleteArticle(String no) {
 			return dao.deleteArticle(no);
 		}
 		public String deleteFile(String no) {
 			return dao.deleteFile(no);
 		}
-		
+		public int deleteComment(String no, String parent) {
+			return dao.deleteComment(no, parent);
+		}
 }

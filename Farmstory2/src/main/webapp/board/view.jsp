@@ -1,6 +1,7 @@
 <%@ page  contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../_header.jsp"></jsp:include>
+
        <script>
 	
 			$(document).ready(function() {
@@ -33,15 +34,22 @@
 						
 						let jsonData = {"no" : no, "parent" : parent};
 						
+						console.log("jsonData :"+jsonData);
+						
 						$.ajax({
-							url: '/Jboard1/proc/commentDeleteProc.jsp',
+							url: '/Farmstory2/board/commentDelete.do',
 							typy: 'GET',
 							data: jsonData,
 							dataType: 'json',
 							success: function(data){
+								console.log("data : "+data);
 								
 								if(data.result == 1){
 									alert('댓글이 삭제되었습니다.');
+									
+									article.hide();
+									
+									
 								}
 							}
 						});
@@ -81,7 +89,7 @@
 						console.log(jsonData);
 						
 						$.ajax({
-							url: '/Jboard1/proc/commentModifyProc.jsp',
+							url: '/Farmstory2/board/commentModify.do',
 							type: 'POST',
 							data: jsonData,
 							dataType: 'json',
@@ -115,6 +123,7 @@
 						alert('댓글을 작성하세요');
 						return false;
 					}
+					console.log("1");
 					
 					let jsonData={
 							"no":no,
@@ -123,10 +132,10 @@
 							
 					};
 					
-					
+					console.log(jsonData);
 					
 					$.ajax({
-						url:'/Farmstory2/commentWriteController.do',
+						url:'/Farmstory2/board/commentWrite.do',
 						method:'POST',
 						data:jsonData,
 						dataType:'json',
@@ -203,10 +212,10 @@
 		                        <span class="nick">${comment.nick}</span>
 		                        <span class="date">${comment.rdate.substring(2, 10)}</span>
 		                        <p class="content">${comment.content}</p>                        
-		                        <c:if test="${sessUser.uid.equales(comment.uid)}">
+		                        <c:if test="${sessUser.uid.equals(comment.uid)}">
 			                        <div>
 			                            <a href="#" class="remove" data-no="${comment.no}" data-parent="${comment.parent}">삭제</a>
-			                            <a href="#" class="modify">수정</a>
+			                            <a href="#" class="modify" data-no="${comment.no}">수정</a>
 			                        </div>
 		                        </c:if>
 		                    </article>
@@ -223,7 +232,7 @@
                 <section class="commentForm">
                     <h3>댓글쓰기</h3>
                     <form action="#" method="post">
-                    	<input type="hidden" name="no" value="${no}">
+                    	<input type="hidden" name="no" value="${article.no}">
                     	<input type="hidden" name="uid" value="${sessUser.uid}">
                         <textarea id="comment" name="content" placeholder="내용을 입력해 주세요"></textarea>
                         <div>

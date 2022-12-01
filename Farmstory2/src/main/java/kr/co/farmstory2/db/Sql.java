@@ -46,10 +46,10 @@ public class Sql {
 											+"`oriName`=?";
 	
 	public static final String INSERT_COMMENT = "insert into `board_article` set"
-												+"`parent`=?,"
-												+"`content`=?,"
-												+"`uid`=?,"
-												+"`regip`=?,"
+												+"`parent`=?, "
+												+"`content`=?, "
+												+"`uid`=?, "
+												+"`regip`=?, "
 												+"`rdate`=NOW()";
 										
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
@@ -90,7 +90,14 @@ public class Sql {
 	public static final String SELECT_COMMENT_LATEST = "SELECT a.*, b.nick FROM `board_article` AS a "
 														+ "JOIN `board_user` AS b USING(`uid`) "
 														+ "WHERE `parent`!=0 ORDER BY `no` DESC LIMIT 1";
-	
+	public static final String SELECT_LATESTS = "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
+
+	public static final String SELECT_LATEST = "SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+
 	public static final String UPDATE_ARTICLE = "update `board_article` set `title`=?, `content`=?, `rdate`=NOW() where `no`=?";
 	
 	

@@ -37,6 +37,7 @@ public class AutoLoginFilter implements Filter{
 		
 		UserVo sessUser = (UserVo) sess.getAttribute("sessUser");
 		
+		
 		if(sessUser != null) {
 			//로그인 상태인 경우
 			//다음 필터 실행

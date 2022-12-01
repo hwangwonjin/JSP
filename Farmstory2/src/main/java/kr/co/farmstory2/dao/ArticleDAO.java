@@ -83,17 +83,16 @@ public class ArticleDAO extends DBHelper {
 	}
 	
 	public ArticleVo insertComment(ArticleVo comment) {
-		
 		ArticleVo article = null;
 		int result = 0;
 		
 		try{
-			Connection conn = getConnection();
+			conn = getConnection();
 			
 			conn.setAutoCommit(false);
 			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
 			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_COUNT_PLUSE);
-			Statement stmt = conn.createStatement();
+			stmt = conn.createStatement();
 			psmt1.setInt(1, comment.getParent());
 			psmt1.setString(2, comment.getContent());
 			psmt1.setString(3, comment.getUid());
@@ -101,9 +100,9 @@ public class ArticleDAO extends DBHelper {
 			
 			psmt2.setInt(1, comment.getParent());
 			
-			result = psmt1.executeUpdate();
+			result = psmt1.executeUpdate();	
 			psmt2.executeUpdate();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+			rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
 			
 			conn.commit();
 			
@@ -115,13 +114,7 @@ public class ArticleDAO extends DBHelper {
 				article.setRdate(rs.getString(11).substring(2, 10));
 				article.setNick(rs.getString(12));
 			}
-			
-			rs.close();
-			stmt.close();
-			psmt1.close();
-			psmt2.close();
-			conn.close();
-			
+			close();
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage());
@@ -363,6 +356,37 @@ public class ArticleDAO extends DBHelper {
 		}
 		
 		return comments;
+	}
+	
+	public List<ArticleVo> selectLatests(String cate1, String cate2, String cate3) {
+		List<ArticleVo> latests = new ArrayList<>();
+		
+		try {
+			logger.info("selectLatests..");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVo ab = new ArticleVo();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(ab);
+			}
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("latests size : " +latests.size());
+		return latests;
 	}
 	
 	public void updateArticle(String no, String title, String content) {
