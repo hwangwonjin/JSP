@@ -5,30 +5,30 @@
 		$(function(){
 			
 			//공지사항 최신글 가져오기
-			$.get('/Farmstory2/board/proc/getLatest.jsp?cate=notice', function(data) {
+			$.get('/Farmstory2/getLatest.do?cate=notice', function(data) {
 				
 				for(let latest of data){
-					let url = "./board/view.jsp?group=community&cate=notice&no="+latest.no+"&pg=1";
+					let url = "./board/view.do?group=community&cate=notice&no="+latest.no+"&pg=1";
 					$('#tabs-1 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a><li>");
 					
 					
 				}
 			});
 			
-			$.get('/Farmstory2/board/proc/getLatest.jsp?cate=qna', function(data) {
+			$.get('/Farmstory2/getLatest.do?cate=qna', function(data) {
 				
 				for(let latest of data){
-					let url = "./board/view.jsp?group=community&cate=qna&no="+latest.no+"&pg=1";
+					let url = "./board/view.do?group=community&cate=qna&no="+latest.no+"&pg=1";
 					$('#tabs-2 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a><li>");
 					
 					
 				}
 			});
 			
-			$.get('/Farmstory2/board/proc/getLatest.jsp?cate=faq', function(data) {
+			$.get('/Farmstory2/getLatest.do?cate=faq', function(data) {
 				
 				for(let latest of data){
-					let url = "./board/view.jsp?group=community&cate=faq&no="+latest.no+"&pg=1";
+					let url = "./board/view.do?group=community&cate=faq&no="+latest.no+"&pg=1";
 					$('#tabs-3 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a><li>");
 					
 					

@@ -57,20 +57,17 @@ public class WriteController extends HttpServlet{
 			MultipartRequest mr  = service.uploadFile(req, path);
 			
 			//데이터 수신
-			logger.info("1");
+			
 			String group = mr.getParameter("group");
-			logger.info("2");
 			String cate = mr.getParameter("cate");
-			logger.info("3");
 			String title = mr.getParameter("title");
-			logger.info("4");
 			String content = mr.getParameter("content");
-			logger.info("5");
 			String uid = mr.getParameter("uid");
-			logger.info("6");
-			String fname = mr.getParameter("fname");
-			logger.info("7");
+			String fname = mr.getFilesystemName("fname");
 			String regip = req.getRemoteAddr();
+			
+			logger.debug("fname : " +fname);
+			
 			
 			ArticleVo article = new ArticleVo();
 			article.setCate(cate);
@@ -87,11 +84,14 @@ public class WriteController extends HttpServlet{
 			
 			//파일 첨부 시
 			if(fname != null) {
+				logger.debug("1");
 				//파일 명 수정
 				String newName = service.renameFile(fname, uid, path);
 				
 				//파일 테이블 추가
 				service.insertFile(parent, newName, fname);
+				
+				logger.debug("newname : " +newName);
 			}
 			logger.debug("article2 : " +article);
 			//리다이렉트

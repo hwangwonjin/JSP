@@ -180,10 +180,10 @@
                         <th>제목</th>
                         <td><input type="text" name="title" value="${article.title}" readonly/></td>
                     </tr>
-                    <c:if test="${article.file > 0 }">
+                    <c:if test="${article.file gt 0 }">
                     <tr>
                         <th>파일</th>
-                        <td><a href="#">${article.oriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
+                        <td><a href="/Farmstory2/board/download.do?parent=${article.no}">${article.oriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
                     </tr>
                     </c:if>
                     <tr>

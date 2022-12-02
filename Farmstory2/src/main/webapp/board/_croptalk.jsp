@@ -15,7 +15,7 @@
                 </aside>
                 <article>
                     <nav>
-                        <img src="Farmstory2/img/sub_nav_tit_cate3_${cate}.png" alt="농작물이야기"/>
+                        <img src="../img/sub_nav_tit_cate3_${cate}.png" alt="농작물이야기"/>
                         <p>
                             HOME > 농작물이야기 > 
 							<c:if test="${cate eq 'story'}"><em>농작물이야기</em></c:if>	                            
