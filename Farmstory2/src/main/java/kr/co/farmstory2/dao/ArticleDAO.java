@@ -375,8 +375,9 @@ public class ArticleDAO extends DBHelper {
 			while(rs.next()) {
 				ArticleVo ab = new ArticleVo();
 				ab.setNo(rs.getInt(1));
-				ab.setTitle(rs.getString(2));
-				ab.setRdate(rs.getString(3).substring(2, 10));
+				ab.setCate(rs.getString(2));
+				ab.setTitle(rs.getString(3));
+				ab.setRdate(rs.getString(4).substring(2, 10));
 				
 				latests.add(ab);
 			}

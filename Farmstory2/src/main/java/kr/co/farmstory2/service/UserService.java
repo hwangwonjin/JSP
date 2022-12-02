@@ -52,7 +52,9 @@ public enum UserService {
 	public UserVo selectUserForFindId(String name, String email) {
 		return dao.selectUserForFindId(name, email);
 	}
-	
+	public UserVo selectUserForFindPw(String uid, String email) {
+		return dao.selectUserForFindPw(uid, email);
+	}
 	
 	public void updateUserForSession(String uid, String sessId) {
 		dao.updateUserForSession(uid, sessId);
