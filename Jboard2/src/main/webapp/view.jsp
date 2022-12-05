@@ -26,7 +26,7 @@
                 
                 <div>
                 	<c:if test="${sessUser.uid.equals(article.uid)}">
-	                    <a href="/Jboard2/delete.do?no=${article.no}$pg=${pg}" class="btn btnRemove">삭제</a>
+	                    <a href="/Jboard2/delete.do?no=${article.no}&pg=${pg}" class="btn btnRemove">삭제</a>
 	                    <a href="./modify.do?no=${article.no}&pg=${pg}" class="btn btnModify">수정</a>
 	                    </c:if>
 	                    <a href="./list.html" class="btn btnList">목록</a>

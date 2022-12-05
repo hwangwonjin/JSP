@@ -13,8 +13,14 @@ public class UserVo {
 	private String addr2;
 	private String regip;
 	private String rdate;
+	private String wdate;
 	
-	
+	public String getWdate() {
+		return wdate;
+	}
+	public void setWdate(String wdate) {
+		this.wdate = wdate;
+	}
 	public String getUid() {
 		return uid;
 	}

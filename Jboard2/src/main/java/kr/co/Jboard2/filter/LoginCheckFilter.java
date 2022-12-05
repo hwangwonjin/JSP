@@ -58,7 +58,7 @@ public class LoginCheckFilter implements Filter{
 		}else if(uri.contains("/user/login.do")){
 			
 			if(sessUser != null) {
-				((HttpServletResponse)response).sendRedirect("/Jboard2/user/login.do");
+				((HttpServletResponse)response).sendRedirect("/Jboard2/list.do");
 				return;
 			}
 			
