@@ -14,7 +14,7 @@
 				
 				let pass1 = $('input[name=pass1]').val();
 				let pass2 = $('input[name=pass2]').val();
-				let uid = $('#uid').text();
+				let uid = $('input[name=uid]').val();
 				
 				if(pass2.match(rePass)){
 					
@@ -22,7 +22,26 @@
 						isPassOk = true;
 						$('.passResult').css('color', 'green').text('사용할 수 있는 비밀번호입니다.');
 
-						let jsonDate = 
+						let jsonDate = {
+									"pass" : pass2,
+									"uid" 	: uid
+						};
+						
+						$.ajax({
+							url : '/Jboard2/user/findPwChange.do',
+							type: 'post',
+							data: jsonData,
+							dataType: 'json',
+							success: function(data) {
+								
+								if(data.result > 0){
+									alert('비밀번호가 변경 되었습니다.');
+									location.href = "/Jboard2/user/login.do";
+								}else{
+									alert('비밀번호 변경에 실패하였습니다.');
+								}
+							}
+						});
 						
 					}else{
 						isPassOk = false;
@@ -46,7 +65,7 @@
 			
 			console.log('click with...');
 			
-			let nick = $('input[name=uid]').val();
+			let uid = $('input[name=uid]').val();
 			
 			let jsonData = {
 						"uid" : uid	
@@ -62,9 +81,10 @@
 				success: function(data) {
 					
 					if(data.result > 0){
-						location.href = "/Jboard2/user/login.do"
+						alert('탈퇴 되었습니다.');
+						location.href = "/Jboard2/user/login.do";
 					}else{
-						alert('탈퇴가 실패하였습니다.')
+						alert('탈퇴가 실패하였습니다.');
 					}
 				}
 			});
@@ -73,13 +93,13 @@
 </script>	     
         <main id="user">
             <section class="register">
-                <form action="/Jboard2/user/modify.do" method="post">
+                <form action="/Jboard2/user/myInfo.do" method="post">
                 <input type="hidden" name="uid" value="${sessUser.uid}">
                     <table border="1">
                         <caption> 회원정보 수정</caption>
                         <tr>
                             <td>아이디</td>
-                            <td id="uid">${sessUserForPass.uid}</td>
+                            <td>${sessUserForPass.uid}</td>
                         </tr>
                         <tr>
                             <td>비밀번호</td>

@@ -1,6 +1,7 @@
 package kr.co.Jboard2.controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
 
 import kr.co.Jboard2.Vo.UserVo;
 import kr.co.Jboard2.service.user.UserService;
@@ -34,8 +37,14 @@ public class WithdrawController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uid = req.getParameter("uid");
-		String grade = req.getParameter("grade");
-		String wdate = req.getParameter("wdate");
-		UserVo vo = service.updateUserWithdraw(grade, wdate);
+		
+		int result = service.updateUserWithdraw(uid);
+		
+		resp.setContentType("application/json;charset=UTF-8");
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
 	}
 }

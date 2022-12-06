@@ -1,5 +1,6 @@
 package kr.co.Jboard2.dao;
 
+import org.apache.catalina.User;
 import org.apache.tomcat.jni.OS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -200,7 +201,25 @@ public class UserDAO extends DBHelper{
 	
 	public void selectUsers() {}
 	public void deleteUser() {}
-	public void updateUser() {}
+	public void updateUser(UserVo vo) {
+		try {
+			logger.info("updateUser...");
+			conn = getConnection();
+			psmt1 = conn.prepareStatement(Sql.UPDATE_USER);
+			psmt1.setString(1, vo.getName());
+			psmt1.setString(2, vo.getNick());
+			psmt1.setString(3, vo.getEmail());
+			psmt1.setString(4, vo.getHp());
+			psmt1.setString(5, vo.getZip());
+			psmt1.setString(6, vo.getAddr1());
+			psmt1.setString(7, vo.getAddr2());
+			psmt1.setString(8, vo.getUid());
+			psmt2 = conn.prepareStatement(Sql.select_user_for_update_session)
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	public int updateUserPassword(String uid, String pass) {
 		int result = 0;
 		
@@ -268,22 +287,21 @@ public class UserDAO extends DBHelper{
 		}
 	}
 	
-	public UserVo updateUserWithdraw(String grade, String wdate) {
-		UserVo vo = null;
+	public int updateUserWithdraw(String uid) {
+		int result = 0;
 		try {
 			logger.info("updateUserWithdraw...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.UPDATE_USER_WITHDRAW);
-			psmt.setString(1, grade);
-			psmt.setString(2, wdate);
-			psmt.executeUpdate();
+			psmt.setString(1, uid);
+			result = psmt.executeUpdate();
 			
 			close();
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
-		return vo;
+		return result;
 	}
 	
 	public TermsVo selectTerms() {

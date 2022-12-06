@@ -67,11 +67,13 @@ public enum UserService {
 		dao.updateUserForSessionOut(uid);
 	}
 	
-	public UserVo updateUserWithdraw(String grade, String wdate) {
-		return dao.updateUserWithdraw(grade, wdate);
+	public int updateUserWithdraw(String uid) {
+		return dao.updateUserWithdraw(uid);
 	}
 	
-	public void updateUser() {};
+	public void updateUser() {
+		dao.updateUser();
+	};
 	public int updateUserPassword(String uid, String pass) {
 		return dao.updateUserPassword(uid, pass);
 	};
