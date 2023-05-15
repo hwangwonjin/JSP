@@ -41,6 +41,14 @@ public enum ArticleService {
 	  	return dao.selectCountTotal(search);
 	}
 	
+	public void updateArticle(String no, String title, String content) {
+		dao.updateArticle(no, title, content);
+	}
+	
+	public void deleteArticle(String no) {
+		dao.deleteArticle(no);
+	}
+	
 	public List<ArticleVo> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
 	}

@@ -56,7 +56,7 @@ public class MyInfoController extends HttpServlet{
 		vo.setAddr1(addr1);
 		vo.setAddr2(addr2);
 		
-		service.updateUser();
+		service.updateUser(vo);
 		
 	}
 }

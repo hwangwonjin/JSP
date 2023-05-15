@@ -71,8 +71,8 @@ public enum UserService {
 		return dao.updateUserWithdraw(uid);
 	}
 	
-	public void updateUser() {
-		dao.updateUser();
+	public UserVo updateUser(UserVo vo) {
+		return dao.updateUser(vo);
 	};
 	public int updateUserPassword(String uid, String pass) {
 		return dao.updateUserPassword(uid, pass);

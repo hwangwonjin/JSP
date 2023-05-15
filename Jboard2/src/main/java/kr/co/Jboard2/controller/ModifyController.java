@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.Jboard2.Vo.ArticleVo;
 import kr.co.Jboard2.service.article.ArticleService;
 
 @WebServlet("/modify.do")
@@ -34,10 +35,13 @@ public class ModifyController extends HttpServlet{
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		
+		ArticleVo article = service.selectArticle(no);
+		
 		req.setAttribute("no", no);
 		req.setAttribute("pg", pg);
 		req.setAttribute("title", title);
 		req.setAttribute("content", content);
+		req.setAttribute("article", article);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/modify.jsp");
 		dispatcher.forward(req, resp);
@@ -45,6 +49,17 @@ public class ModifyController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String no = req.getParameter("no");
+		String pg = req.getParameter("pg");
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
 		
+		req.setAttribute("no", no);
+		req.setAttribute("title", title);
+		req.setAttribute("content", content);
+		
+		service.updateArticle(no, title, content);
+		
+		resp.sendRedirect("/Jboard2/view.do?pg="+pg+"&no="+no+"result=201");
 	}
 }

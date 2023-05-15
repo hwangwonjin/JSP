@@ -24,6 +24,7 @@ public class Sql {
 	public static final String SELECT_USER_FOR_FIND_ID = "select * from `board_user` where `name`=? and `email`=?";
 	public static final String SELECT_USER_FOR_FIND_PW = "select * from `board_user` where `uid`=? and `email`=?";
 	public static final String SELECT_USER_FOR_FIND_PASS = "select * from `board_user` where`uid`=? and `pw`=SHA2(?, 256)";
+	public static final String SELECT_USER_FOR_UPDATE_SESSION = "select * from `board_user` where `uid`=?";
 	
 	public static final String UPDATE_USER = "update `board_user` set `name`=?, `nick`=?, `email`=?, `hp`=?, `zip`=?, `addr1`=?, `addr2`=? where `uid`=?";
 	public static final String UPDATE_USER_WITHDRAW = "update `board_user` set `grade` = 0, `wdate` = NOW() where `uid`=?";

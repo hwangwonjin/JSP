@@ -68,6 +68,7 @@
 								
 								if(data.result == 1){
 									alert('댓글이 삭제되었습니다.');
+									article.hide();
 								}
 							}
 						});
